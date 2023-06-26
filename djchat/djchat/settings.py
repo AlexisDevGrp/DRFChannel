@@ -41,6 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # external applications
+    'drf_spectacular',
+    'rest_framework',
+    # Internal applications
+    'account',
+    'server',
 ]
 
 MIDDLEWARE = [
@@ -119,9 +125,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# indicates that we have a custom user model
+AUTH_USER_MODEL = "account.Account"
+
+# DRF spectacular
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTIFICATION_CLASSES': [
+        'rest_framework.authentication.SessionAutothentication'
+    ],
+}
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'CDL API',
+    'DESCRIPTION': 'Clearstream Data Layer file Manager',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': True,
+    # OTHER SETTINGS
+}
